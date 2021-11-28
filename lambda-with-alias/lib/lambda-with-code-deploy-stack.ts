@@ -53,7 +53,6 @@ export class LambdaWithCodeDeployStack extends cdk.Stack {
     });
     topic.addSubscription(new subscriptions.EmailSubscription(emailAddress.valueAsString))
     
-    // https://bobbyhadz.com/blog/cloudwatch-alarm-aws-cdk
     const lambdaErrors = mylambda.metricErrors({
       period: cdk.Duration.minutes(1),
       statistic: "sum",

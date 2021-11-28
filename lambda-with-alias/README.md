@@ -1,10 +1,16 @@
-# Welcome to your CDK TypeScript project!
+**What is this?**
 
-This is a blank project for TypeScript development with CDK.
+This example creates a `LambdaDeploymentGroup` for a lambda function. Each blue green deployment monitors the candidate lambda for errors. If an error occurs within 5 minutes of deployment, the lambda is rolled back and an email is sent to the user.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+Learn more about [Deployment Groups with CodeDeploy here](https://docs.aws.amazon.com/codedeploy/latest/userguide/deployment-groups.html)
 
-## Useful commands
+**Instructions**
+
+Change `YOUR_EMAIL_HERE` in `deploy-lambda-with-alias.sh` to deploy this and try it out. 
+
+Then run `./deploy-lambda-with-alias.sh` in the parent directory
+
+**Useful commands**
 
  * `npm run build`   compile typescript to js
  * `npm run watch`   watch for changes and compile

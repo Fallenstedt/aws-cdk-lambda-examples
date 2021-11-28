@@ -1,10 +1,12 @@
-# Welcome to your CDK TypeScript project!
+**What is this?**
 
-This is a blank project for TypeScript development with CDK.
+This example creates a simple lambda infront of an APIGateway
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+**Instructions**
 
-## Useful commands
+run `./deploy-just-lambda.sh` in the parent directory
+
+**Useful commands**
 
  * `npm run build`   compile typescript to js
  * `npm run watch`   watch for changes and compile
