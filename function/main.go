@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"math/rand"
 )
 
 
@@ -14,8 +15,16 @@ func handleLambdaEvent (ctx context.Context, request events.APIGatewayProxyReque
 	if name == "" {
 		return response(400, "Bad Request"), nil
 	}
+
+	// maybeExplode()
 	
 	return response(200, fmt.Sprintf("Hello %v", name)), nil
+}
+
+func maybeExplode() {
+	if rand.Intn(100) < 50 {
+		panic("kaboom!")
+	}
 }
 
 func response(statusCode int, body string) (events.APIGatewayProxyResponse) {
