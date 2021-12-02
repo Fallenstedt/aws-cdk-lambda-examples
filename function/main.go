@@ -16,9 +16,9 @@ func handleLambdaEvent (ctx context.Context, request events.APIGatewayProxyReque
 		return response(400, "Bad Request"), nil
 	}
 
-	// maybeExplode()
+	maybeExplode()
 	
-	return response(200, fmt.Sprintf("Hello %v", name)), nil
+	return response(200, fmt.Sprintf("Happy Birthday %v", name)), nil
 }
 
 func maybeExplode() {

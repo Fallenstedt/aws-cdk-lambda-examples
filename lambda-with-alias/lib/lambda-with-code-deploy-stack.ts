@@ -3,11 +3,11 @@ import * as cdk from '@aws-cdk/core';
 import * as apigateway from '@aws-cdk/aws-apigateway'
 import * as lambda from '@aws-cdk/aws-lambda'
 import * as cd from "@aws-cdk/aws-codedeploy";
-import * as cw from "@aws-cdk/aws-cloudwatch";
 import * as cwactions from "@aws-cdk/aws-cloudwatch-actions"
 import * as sns from "@aws-cdk/aws-sns"
 import * as subscriptions from "@aws-cdk/aws-sns-subscriptions"
 import * as path from 'path'
+import { version } from 'process';
 
 export class LambdaWithCodeDeployStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -17,7 +17,7 @@ export class LambdaWithCodeDeployStack extends cdk.Stack {
   
   }
 
-  private buildApi(fn: lambda.Function) {
+  private buildApi(fn: lambda.Alias) {
     const api = new apigateway.RestApi(this, 'SimpleLambdaAPI', {
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS
@@ -27,7 +27,7 @@ export class LambdaWithCodeDeployStack extends cdk.Stack {
     api.root.addMethod("GET", new apigateway.LambdaIntegration(fn), {operationName: "test-lambda"})
   }
 
-  private lambda(): lambda.Function {
+  private lambda(): lambda.Alias {
     // Create a Lambda Function
     const lambdaName = "MyLambda2"
     const mylambda = new lambda.Function(this, lambdaName, {
@@ -57,7 +57,8 @@ export class LambdaWithCodeDeployStack extends cdk.Stack {
       period: cdk.Duration.minutes(1),
       statistic: "sum",
       dimensionsMap: {
-        FunctionName: mylambda.functionName
+        FunctionName: mylambda.functionName,
+        Resource: `${mylambda.functionName}:${lambdaAliasName}`
       }
     })
     const lambdaAlarm = lambdaErrors.createAlarm(this, "LambdaFailureAlarm", {
@@ -73,6 +74,6 @@ export class LambdaWithCodeDeployStack extends cdk.Stack {
       alarms: [lambdaAlarm]
     })
 
-    return mylambda
+    return aliasLambda
   }
 }
